@@ -151,7 +151,7 @@ class ProcedurePDF(General):
                 # << Update Headings >>
                 # Headings with all caps are main headings
                 # Headings with standard letters are sub headings
-                if page_heading.isupper():
+                if self._isPageHeadingUpper(page_heading):
                     # Update Main Heading and Reset Sub Heading
                     main_heading = page_heading
                     sub_heading = ''
@@ -208,6 +208,18 @@ class ProcedurePDF(General):
         Gets the page heading from an array containing the page data that has already been split with "Blackstone's Criminal Procedure 2022".
         """
         return page_data[0].replace('\n','')
+
+    def _isPageHeadingUpper(self,heading:str) -> bool:
+        """
+        Checks if a large portion of the heading is in capital letters. This is because some headings that include sections will have a lower case s or numbers.
+
+        If more than 80% of the characters are upper case, this will be considered as a main heading and return True.
+        """
+        alph = list(filter(str.isalpha,heading))
+        percentage_uppercase = sum(map(str.isupper,alph)) / len(alph)
+
+        if percentage_uppercase > 0.8: return True
+        return False
 
     def _getPageText(self,page_data:List[str]) -> str:
         """
