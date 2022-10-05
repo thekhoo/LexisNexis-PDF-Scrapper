@@ -138,7 +138,7 @@ class ProcedurePDF(General):
         for page in pages:
 
             # << Split the array to obtain the title and text data >>
-            page_data = self._splitPageContent(page)
+            page_data = self._splitPageContentByBlackstone(page)
 
             # Only work on arrays with a length more than 1
             # At the very end of the document, there'll be a "End of Document" with a linespace after. This will register as the last element of the array
@@ -251,14 +251,14 @@ class ProcedurePDF(General):
         eod_text = re.split(eod_regex,self.pdf_text)
         return eod_text
 
-    def _splitPageContent(self,page:str) -> List[str]:
+    def _splitPageContentByBlackstone(self,page:str) -> List[str]:
         """
         Takes in a string splits by "Blackstone's Criminal Practice 2022" as this occurs right after every main/sub heading on every page.
         """
         # Distinct Characteristics: Every heading/subheading will have "Blackstone's Criminal Practice 2022"
         # This will create an array of two elements - The title and the remainder of the text until end of document.
         # Title Regex    
-        title_regex = r"Blackstone's\sCriminal\sPractice\s2022"
+        title_regex = r"\nBlackstone's\sCriminal\sPractice\s2022"
         page_data = re.split(title_regex,page)
 
         return page_data    
