@@ -1,10 +1,10 @@
-from enum import unique
+from curses.ascii import isupper
 import os
 import json
-from sys import stdout
 import PyPDF2
 import logging
 import regex as re
+from sys import stdout
 
 from docx import Document
 from docx.shared import Pt
@@ -35,9 +35,10 @@ class General:
         pass
 
     def removeNewLine(self,raw_text:str) -> List[str]:
-
         """
-        Remove the newline character '\n' within the PDF text
+        Remove newline characters '\n' within the PDF text that are there due to space constraints. This avoids unnecessary line breaks in the middle of documents due to the formatting of the PDF document.
+        
+        This function will keep most linebreaks that occur at the end of paragraphs/bullet points.
         """
 
         linespace_regex = r'[\.;:]\n'                           # Regex to identify linespaces to be kept (New line after full stop etc.)
@@ -58,6 +59,10 @@ class General:
 
 class ProcedurePDF(General):
 
+    SECTION_MAIN_HEADING = "section_heading"
+    SECTION_SUB_HEADING = "section_subheading"
+    SECTION_TEXT = "section_text"
+
     """
     Class to handle a SINGLE (.pdf) file from the Procedure (Part D) from Blackstone's Criminal Practice 2022 from Lexis Library
     """
@@ -65,7 +70,7 @@ class ProcedurePDF(General):
     def __init__(self,filename:str) -> None:
         self.filename = filename
         self.pdf_text = self._getPDFText()
-        self.pdf_dict = self._getTextDict()
+        self.pdf_dict = self._getPDFDict()
 
     def getSections(self,sections:List[int]) -> dict:
         """
@@ -76,9 +81,9 @@ class ProcedurePDF(General):
         # Loop through all the section numbers provided
         for section in sections:
             key = f"{self.filename}.{section}"                      # Get the Section Heading
-            section_text = self.removeNewLine(self.pdf_dict[key])   # Use the Section heading as the key and remove newline characters
+            section_data = self.pdf_dict[key]   # Use the Section heading as the key and remove newline characters
 
-            all_section_dict.update({key: section_text})    # Update the main dictionary with the section dictionary
+            all_section_dict.update({key: section_data})    # Update the main dictionary with the section dictionary
         
         return all_section_dict
 
@@ -112,24 +117,148 @@ class ProcedurePDF(General):
             return text
 
     # Converts a string of text into a dictionary based on sections (i.e. D5.4)
-    def _getTextDict(self) -> dict:
+    def _getPDFDict(self) -> dict:
         """
-        Splits the text by section to create a dictionary with each section as the key.
+        Splits the text by section to create a dictionary with each section as the key to another dictionary holding the main topic, sub topic and text.
         """
 
         if self.pdf_text == None:
             return None
 
-        section_regex = re.escape(self.filename) + r'\.\d{1,3}\n'       # Create a regex to idenfity section headers (i.e. D4.52)
-        section_headers = re.findall(section_regex,self.pdf_text)       # Gets all the section headers
-        section_text = re.split(section_regex,self.pdf_text)            # Gets all the text for the section headers
+        # << Split the document into an array by "End of Document" >>
+        pages = self._splitTextByEOD()
 
-        sections = [s.strip('\n') for s in section_headers]             # Remove the linespace character from the section headers
-        section_text.pop(0)                                             # Remove the first element in the section_text array (Before D#.1)    
-        pdf_dict = dict(zip(sections,section_text))                     # Create a dictionary of the section headers and text
+        # << Obtain a dictionary of the section, main heading, subheading and text >>
+        # Main and Sub Heading
+        main_heading = ''
+        sub_heading = ''
+
+        text_dict = {}
+
+        for page in pages:
+
+            # << Split the array to obtain the title and text data >>
+            page_data = self._splitPageContent(page)
+
+            # Only work on arrays with a length more than 1
+            # At the very end of the document, there'll be a "End of Document" with a linespace after. This will register as the last element of the array
+            if len(page_data) > 1:
+
+                # << Get the page heading and text >>
+                page_heading = self._getPageHeading(page_data)
+                page_text = self._getPageText(page_data)
+
+                # << Update Headings >>
+                # Headings with all caps are main headings
+                # Headings with standard letters are sub headings
+                if page_heading.isupper():
+                    # Update Main Heading and Reset Sub Heading
+                    main_heading = page_heading
+                    sub_heading = ''
+                else:
+                    # Update Sub Heading
+                    sub_heading = page_heading
+
+                # << Get the sections and section text in the page text >>
+                section_regex = re.escape(self.filename) + r'\.\d{1,3}\n'           # Create a regex to idenfity section headers (i.e. D4.52)
+                sections = self._getPageSections(section_regex,page_text)           # Gets the list of sections that are in the page text
+                section_texts = self._getPageSectionTexts(section_regex,page_text)  # Gets the list of section texts that are in the page text
+
+                # Check if there are any sections on this page.
+                # Only proceed if there are sections on the page.
+                if len(sections) > 0:
+                    # There are sections, proceed to split
+
+                    for section, section_text in zip(sections,section_texts):
+
+                        # << Format the section text into the desired format >>
+                        section_text = self._formatSectionText(section_text,page_heading)
+                        
+                        # << Get the Data in Dictionary Format >>
+                        section_dict = self._getSectionDict(section,main_heading,sub_heading,section_text)
+
+                        # << Update the main dictionary with the section dictionary >>
+                        text_dict.update(section_dict)
+
+        return text_dict
+
+    def _getSectionDict(self,section:str,main_heading:str,sub_heading:str,section_text:List[str]) -> dict:
+        """
+        Create a dictionary with the data in the desired format.
+        """
+        return {
+            section: {
+                self.SECTION_MAIN_HEADING: main_heading,
+                self.SECTION_SUB_HEADING: sub_heading,
+                self.SECTION_TEXT: section_text
+            }
+        }
+
+    def _formatSectionText(self,text:str,page_heading:str) -> List[str]:
+        """
+        Removes any occurances of the page heading within the text and removes newline characters as deemed appropriate. For more information, look at the documentation for the function ProcedurePDF._removePageHeadingInText() and General.removeNewLine()
+        """
+        text = self._removePageHeadingInText(text,page_heading)
+        text = self.removeNewLine(text)
+        return text
+
+
+    def _getPageHeading(self,page_data:List[str]) -> str:
+        """
+        Gets the page heading from an array containing the page data that has already been split with "Blackstone's Criminal Procedure 2022".
+        """
+        return page_data[0].replace('\n','')
+
+    def _getPageText(self,page_data:List[str]) -> str:
+        """
+        Gets the page text from an array containing the page data that has already been split with "Blackstone's Criminal Procedure 2022".
+        """       
+        return page_data[1]
+
+    def _getPageSections(self,regex:str,text:str) -> List[str]:
+        """
+        Gets the list of sections that are in the page text.
+        """
+        sections = re.findall(regex,text)                   # Gets all the section headers
+        sections = [s.replace('\n','') for s in sections]   # Replace all the newline characters in the section headers
+        return sections
+
+    def _getPageSectionTexts(self,regex:str,text:str) -> List[str]:
+        """
+        Gets the list of section texts that are in the page text.
+        """
+        section_text = re.split(regex,text)     # Gets all the text for the section headers
+        section_text.pop(0)                     # Removes the first item in the array - Text between the page title and first section on the page (Not Required)
+        return section_text
+    
+    def _splitTextByEOD(self) -> List[str]:
+        """
+        Splits a string of text by the "End of Document" string into a List of strings.
+        """
+        eod_regex = r"End\sof\sDocument"
+        eod_text = re.split(eod_regex,self.pdf_text)
+        return eod_text
+
+    def _splitPageContent(self,page:str) -> List[str]:
+        """
+        Takes in a string splits by "Blackstone's Criminal Practice 2022" as this occurs right after every main/sub heading on every page.
+        """
+        # Distinct Characteristics: Every heading/subheading will have "Blackstone's Criminal Practice 2022"
+        # This will create an array of two elements - The title and the remainder of the text until end of document.
+        # Title Regex    
+        title_regex = r"Blackstone's\sCriminal\sPractice\s2022"
+        page_data = re.split(title_regex,page)
+
+        return page_data    
+
+    def _removePageHeadingInText(self,text:str,heading:str) -> str:
+        """
+        Removes any occurances of the page heading followed by a newline character within the text. This function is implemented as if a document exceeds the length of the page, the page heading is repeated on the following page followed by a newline character. 
         
-        return pdf_dict
-
+        When parsing through the PDF, the program will assume it is part of the text which is incorrect. This removes it.
+        """
+        return text.replace(f'{heading}\n','')
+    
 class Topic:
 
     """
@@ -198,9 +327,19 @@ class DocxWriter:
             section_dict = pdf.getSections(subsections)
             topic_data.update(section_dict)
 
-        for section_heading, section_text in topic_data.items():
+        for section_title, section_data in topic_data.items():
 
             # Writing the Section as a Level 1 Heading
+            section_main_heading = section_data[pdf.SECTION_MAIN_HEADING]
+            section_sub_heading = section_data[pdf.SECTION_SUB_HEADING]
+            section_text = section_data[pdf.SECTION_TEXT]
+
+            section_heading = f"{section_title} - {section_main_heading}"
+
+            if section_sub_heading != '':
+                # Sub Heading is not Empty
+                section_heading += f" > {section_sub_heading}"
+
             self.doc.add_heading(section_heading,level=2)
 
             # Writing the text data to the document
