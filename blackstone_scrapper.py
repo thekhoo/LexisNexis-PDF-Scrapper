@@ -350,7 +350,11 @@ class DocxWriter:
 
             if section_sub_heading != '':
                 # Sub Heading is not Empty
-                section_heading += f" > {section_sub_heading}"
+                if section_main_heading == "":
+                    # Main Heading is Empty
+                    section_heading = f"{section_title} - {section_sub_heading}"
+                else:
+                    section_heading += f" > {section_sub_heading}"
 
             self.doc.add_heading(section_heading,level=2)
 
