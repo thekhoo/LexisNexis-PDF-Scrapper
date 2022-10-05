@@ -1,48 +1,26 @@
 {
-    "doc_title": "SA8 - Summary Trial Procedure",
+    "doc_title": "SA14 - The rule against hearsay",
 
     "doc_data": {
 
         "Topic 1" : {
-            "title": "Pre-trial rulings.",
+            "title": "The rule against hearsay.",
             "sections": {
-                "D21": [35]
+                "F16": [1,2,7,10,11,14,15,16,17,18,19,21,22,23,24,25,26]
             }
         },
 
-        "Topic 2": {
-            "title": "Proceeding in the absence of the defendant.",
+        "Topic 2" : {
+            "title": "Exceptions to the rule against hearsay.",
             "sections": {
-                "D5": [43],
-                "D22": [12,14,17,19]
+                "F17": [1,2,3,4,8,9,10,11,13,14,15,17,20,21,25,26,42,48,49,50,51,52,56,60,66,70,71,78,88,89,90,92]
             }
         },
 
-        "Topic 3": {
-            "title": "Abuse of process in the magistrates' courts.",
+        "Topic 3" : {
+            "title": "Other exceptions and safeguards.",
             "sections": {
-                "D21": [21]
-            }
-        },
-
-        "Topic 4": {
-            "title": "Procedural steps in a summary trial, including role of the authorised court officer, the procedure for raising points of law, and the different ways in which evidence may be presented or proved and speeches.",
-            "sections": {
-                "D22": [36,37,38,39,40,41,43,44,46,47,63,80,81]
-            }
-        },
-
-        "Topic 5": {
-            "title": "Submission of no case to answer.",
-            "sections": {
-                "D22": [52,53,54]
-            }
-        },
-
-        "Topic 6": {
-            "title": "Verdicts.",
-            "sections": {
-                "D22": [70,71,72]
+                "F17": [34,35,37,84,85,86,87,94,95,98,99,5]
             }
         }
     }   
