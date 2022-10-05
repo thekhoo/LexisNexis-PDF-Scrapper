@@ -160,7 +160,7 @@ class ProcedurePDF(General):
                     sub_heading = page_heading
 
                 # << Get the sections and section text in the page text >>
-                section_regex = re.escape(self.filename) + r'\.\d{1,3}\n'           # Create a regex to idenfity section headers (i.e. D4.52)
+                section_regex = r'\n' + re.escape(self.filename) + r'\.\d{1,3}'     # Create a regex to idenfity section headers (i.e. D4.52)
                 sections = self._getPageSections(section_regex,page_text)           # Gets the list of sections that are in the page text
                 section_texts = self._getPageSectionTexts(section_regex,page_text)  # Gets the list of section texts that are in the page text
 
