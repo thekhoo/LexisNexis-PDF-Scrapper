@@ -16,26 +16,31 @@
 2. Create a JSON file called `topics.json` in the same directory as the `blackstone_scrapper.py` file. This will be used to tell the program which sections and subsections to scrape. The structure of the file is as follows:
 
     ```js
+    // All text with square brackets [] are variables and can be named according to preference.
+    // All other text are constants that are used as keys throughout the program.
 
     {
-        "doc_title": "",
+        "doc_title": "",    // This is the title of the .docx file that will be created.
 
-        "doc_data": {
+        "doc_data": {       // This is the data that the program should look for.
 
-            "Topic Number": {
+            "[topic_number]" : {        // This is the start of a topic. There can be as many topics as you want within this JSON file.
 
-                "title": "",
-                "sections": {
+                "title": "",            // The title of this topic.
+                "sections": {           // The sections and subsections that the progrma should look for
 
-                    "D3": [],
-                    "D4": []
-                    
+                    "D5": [1,2,3,4,5],           // Use a list for the subsections within that particular section 
+                    "D9": [2,3,4,5,6,7,8]        // Example: D5.1 - D5.5 and D9.2 - D9.8
+                    .
+                    .
+                    .
                 }
             }
+            .
+            .
+            .
         }
-
     }
-
     ```
 
 
