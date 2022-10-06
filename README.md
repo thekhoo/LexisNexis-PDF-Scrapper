@@ -16,7 +16,7 @@
 
 Name the PDF file based on the Part and Section that it belongs to. For example:
 
-    *Part D5 - Starting a Prosecution and Preliminary Proceedings in Magistrates' Court should be named as **D5.pdf**.*
+*Part D5 - Starting a Prosecution and Preliminary Proceedings in Magistrates' Court should be named as **D5.pdf**.*
 
 The file should be saved in a folder called `data`.
 
