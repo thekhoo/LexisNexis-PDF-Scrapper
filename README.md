@@ -82,8 +82,8 @@ The file should be saved in a folder called `data`.
 An object assigned to the PDF files that are detected within `topics.json`.
 
 **Parameters:**     
-**filename** : *`str`*, the PDF filename
 
+**filename** : *`str`*, the PDF filename.
 This is used to search for the PDF file within `data`.
 
 #### ProcedurePDF.pdf_text : `str`
@@ -96,7 +96,7 @@ Dictionary of the PDF file separated by subsections as the keys.
 {
     "[subsection]": {
         "section_heading": "",
-        "sectiom_subheading": "".
+        "sectiom_subheading": "",
         "section_text": []
     }
 }
