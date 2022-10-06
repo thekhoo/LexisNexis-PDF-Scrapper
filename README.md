@@ -11,6 +11,7 @@
 1. Download all the files into a folder and create a folder called `data` and `output`.
 
     * The `data` folder will be used to store all the PDF files downloaded from Lexis Library Blackstone's Criminal Practice 2022.
+    
     * The `output` folder will be where all the word files are written to.
 
 2. Create a JSON file called `topics.json` in the same directory as the `blackstone_scrapper.py` file. This will be used to tell the program which sections and subsections to scrape. The structure of the file is as follows:
