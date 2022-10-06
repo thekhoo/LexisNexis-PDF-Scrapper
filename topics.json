@@ -1,29 +1,19 @@
 {
-    "doc_title": "SA16 - Confessions and Unfair Evidence",
+    "doc_title": "SA14-3 - Other Exceptions and Safeguards",
 
     "doc_data": {
 
         "Topic 1" : {
-            "title": "the definition of a confession; the admissibility of confessions under the Police and Criminal Evidence Act 1984, s.76, and under this same provision, the power to exclude confessions; the admissibility of evidence obtained as a result of a confession which has been excluded; the voir dire procedure where an issue of the admissibility of a confession arises; the general power to exclude prosecution evidence at common law and under statute; and the procedure to be followed where the defendant seeks to exclude prosecution evidence, both in the magistrates’ court and the Crown Court.",
+            "title": "Examinable material on exceptions to the hearsay rule, gateways to admissibility and safeguards.",
             "sections": {
-                "F18": [1,2,3,4,5,8,9,10,11,12,13,14,16,17,18,19,20,24,30,32,33,34,35,36,37,38,39,40,42,62,63,64,68,83,85,87,89],
-                "F15": [1,2,6,7,8]
+                "F17": [34,35,37,84,85,86,87,94,95,98,99]
             }
         },
 
-        "Topic 2": {
-            "title": "The admissibility of evidence of the bad character of the defendant under the Criminal Justice Act 2003, s.101(1).",
+        "Topic 2" : {
+            "title": "Examinable material on making and opposing applications to adduce hearsay evidence.",
             "sections": {
-                "F13": [15,16,17,18,19,20,28,29,30,36,37,39,40,48,49,57,65,66,67,73,78,79,80,84,85,87,88,90]
-            }
-        },
-
-        "Topic 3": {
-            "title": "Safeguards that exist in respect of character evidence. These are, exclusion of evidence, procedural requirements, and the direction to be given to the jury in respect of character evidence.",
-            "sections": {
-                "F13": [3,22,23],
-                "R21": [1,2,3,4,5,6],
-                "F12": [1,2,3,4,5,6]
+                "R20": [1,2,3,4,5]
             }
         }
     }   
