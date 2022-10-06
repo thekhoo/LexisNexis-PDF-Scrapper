@@ -86,11 +86,11 @@ An object assigned to the PDF files that are detected within `topics.json`.
 **filename** : ***`str`***, the PDF filename.
 
 This is used to search for the PDF file within `data`.
-
+\
 
 #### ProcedurePDF.pdf_text : `str`
 The raw text for the entire PDF file.
-
+\
 
 #### ProcedurePDF.pdf_dict : `dict`
 Dictionary of the PDF file separated by subsections as the keys.
@@ -108,15 +108,15 @@ Dictionary of the PDF file separated by subsections as the keys.
 
 #### ProcedurePDF.SECTION_MAIN_HEADING : `str`
 A string constant - "section_heading".
-
+\
 
 #### ProcedurePDF.SECTION_SUB_HEADING : `str`
 A string constant - "section_subheading".
-
+\
 
 #### ProcedurePDF.SECTION_TEXT : `str`
 A string constant - "section_text".
-
+\
 
 #### ProcedurePDF.getSections(sections:List[int]) : `dict`
 Returns a dictionary of the sections that are entered as a list of integers in this function.
@@ -133,6 +133,6 @@ Returns a dictionary of the sections that are entered as a list of integers in t
     .
 }
 ```
-
+\
 
 #### ProcedurePDF._getPDFText() : `str`
