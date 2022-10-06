@@ -24,3 +24,4 @@ The file should be saved in a folder called `data`.
 
 1. Handle key errors if a subsection outside the range of the pdf is requested.
 2. Different log category classifications.
+3. Introduce appropriate error codes to identify errors.
