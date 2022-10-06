@@ -1,7 +1,5 @@
 # PDF Data Scrapper for Blackstone's Criminal Practice 2022 (Part D - Procedure)
 
-# WIP
-
 ## Introduction
 
 This is a mini project and my first attempt at writing a program and pushing it to Github. Aside from helping my friend with a quicker way to copy from the law document, I used this as an opportunity to practice version control and sharpen my understanding of regex and pattern recognition.
