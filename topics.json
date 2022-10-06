@@ -1,19 +1,12 @@
 {
-    "doc_title": "SA14-3 - Other Exceptions and Safeguards",
+    "doc_title": "SA4 - Procedure in the Magistrates' Courts",
 
     "doc_data": {
 
         "Topic 1" : {
-            "title": "Examinable material on exceptions to the hearsay rule, gateways to admissibility and safeguards.",
+            "title": "The rules relating to the provision of initial details of the prosecution case.",
             "sections": {
-                "F17": [34,35,37,84,85,86,87,94,95,98,99]
-            }
-        },
-
-        "Topic 2" : {
-            "title": "Examinable material on making and opposing applications to adduce hearsay evidence.",
-            "sections": {
-                "R20": [1,2,3,4,5]
+                "D5": [20,21]
             }
         }
     }   
