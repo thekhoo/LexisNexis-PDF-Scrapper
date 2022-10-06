@@ -1,27 +1,29 @@
 {
-    "doc_title": "SA14 - The rule against hearsay",
+    "doc_title": "SA16 - Confessions and Unfair Evidence",
 
     "doc_data": {
 
         "Topic 1" : {
-            "title": "The rule against hearsay.",
+            "title": "the definition of a confession; the admissibility of confessions under the Police and Criminal Evidence Act 1984, s.76, and under this same provision, the power to exclude confessions; the admissibility of evidence obtained as a result of a confession which has been excluded; the voir dire procedure where an issue of the admissibility of a confession arises; the general power to exclude prosecution evidence at common law and under statute; and the procedure to be followed where the defendant seeks to exclude prosecution evidence, both in the magistrates’ court and the Crown Court.",
             "sections": {
-                "F16": [1,2,7,10,11,14,15,16,17,18,19,21,22,23,24,25,26]
+                "F18": [1,2,3,4,5,8,9,10,11,12,13,14,16,17,18,19,20,24,30,32,33,34,35,36,37,38,39,40,42,62,63,64,68,83,85,87,89],
+                "F15": [1,2,6,7,8]
             }
         },
 
-        "Topic 2" : {
-            "title": "Exceptions to the rule against hearsay.",
+        "Topic 2": {
+            "title": "The admissibility of evidence of the bad character of the defendant under the Criminal Justice Act 2003, s.101(1).",
             "sections": {
-                "F17": [1,2,3,4,8,9,10,11,13,14,15,17,20,21,25,26,42,48,49,50,51,52,56,60,66,70,71,78,88,89,90,92]
+                "F13": [15,16,17,18,19,20,28,29,30,36,37,39,40,48,49,57,65,66,67,73,78,79,80,84,85,87,88,90]
             }
         },
 
-        "Topic 3" : {
-            "title": "Other exceptions and safeguards.",
+        "Topic 3": {
+            "title": "Safeguards that exist in respect of character evidence. These are, exclusion of evidence, procedural requirements, and the direction to be given to the jury in respect of character evidence.",
             "sections": {
-                "F17": [34,35,37,84,85,86,87,94,95,98,99,5],
-                "R20": [1,2,3,4,5]
+                "F13": [3,22,23],
+                "R21": [1,2,3,4,5,6],
+                "F12": [1,2,3,4,5,6]
             }
         }
     }   
