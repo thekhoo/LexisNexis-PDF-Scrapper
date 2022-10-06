@@ -46,15 +46,21 @@ class General:
         text_arr = re.split(linespace_regex,raw_text)           # Getting an array of text to be rejoined to the delimiters
         
         text_arr_formatted = [s.replace('\n','') for s in text_arr]             # Replace '\n' with '' in the text array
-        delimiter_arr_formatted = [s.replace('\n','') for s in delimiter_arr]   # Replace '\n' with '' in the delimiter array
-        
-        text_delim_zip = zip(text_arr_formatted,delimiter_arr_formatted)    # Zip both arrays together to form a dictionary
-        
-        # Using tuple unpacking, get the text and delimiter rejoined in an array where there should be a line break for every element within this array.
+        delimiter_arr_formatted = [delim.replace('\n','') for delim in delimiter_arr]   # Replace '\n' with '' in the delimiter array
+
         text_arr = []
-        for text, delimiter in text_delim_zip:
-            text_arr.append(text + delimiter)
-        
+
+        if len(delimiter_arr_formatted) > 0:
+            # Delimiters present in text
+            text_delim_zip = zip(text_arr_formatted,delimiter_arr_formatted)    # Zip both arrays together to form a dictionary
+            
+            # Using tuple unpacking, get the text and delimiter rejoined in an array where there should be a line break for every element within this array.
+            for text, delimiter in text_delim_zip:
+                text_arr.append(text + delimiter)
+        else:
+            # Delimiters not present in text
+            text_arr += text_arr_formatted
+
         return text_arr
 
 class ProcedurePDF(General):
@@ -171,10 +177,10 @@ class ProcedurePDF(General):
                     # There are sections, proceed to split
 
                     for section, section_text in zip(sections,section_texts):
-
+                        
                         # << Format the section text into the desired format >>
                         section_text = self._formatSectionText(section_text,page_heading)
-                        
+
                         # << Get the Data in Dictionary Format >>
                         section_dict = self._getSectionDict(section,main_heading,sub_heading,section_text)
 
@@ -357,6 +363,7 @@ class DocxWriter:
                 else:
                     section_heading += f" > {section_sub_heading}"
 
+            logging.info(f"[Writing]: Writing for Subsection {section_title}")
             self.doc.add_heading(section_heading,level=2)
 
             # Writing the text data to the document
