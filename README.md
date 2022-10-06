@@ -77,17 +77,18 @@ The file should be saved in a folder called `data`.
 
 ## Documentation
 
-### `class ProcedurePDF`
-**`ProcedurePDF(filename:str)`**
+### class ProcedurePDF
+**ProcedurePDF(filename:str)**
 An object assigned to the PDF files that are detected within `topics.json`.
 
-**Parameters:**     **filename** : *`str`*, the PDF filename
-                    This is used to search for the PDF file within `data`.
+**Parameters:**     
+    **filename** : *`str`*, the PDF filename
+    This is used to search for the PDF file within `data`.
 
-#### `ProcedurePDF.pdf_text`
+#### ProcedurePDF.pdf_text
 *`(str)`*   The raw text for the entire PDF file.
 
-#### `ProcedurePDF.pdf_dict`
+#### ProcedurePDF.pdf_dict
 *`(dict)`*  Dictionary of the PDF file separated by subsections as the keys.
 
 ```py
