@@ -41,7 +41,7 @@ class General:
         This function will keep most linebreaks that occur at the end of paragraphs/bullet points.
         """
 
-        linespace_regex = r'[\.;:—]\n|or\n|and\n'                           # Regex to identify linespaces to be kept (New line after full stop etc.)
+        linespace_regex = r'[\.;:—]\n|or\n|and\n'               # Regex to identify linespaces to be kept (New line after full stop etc.)
         delimiter_arr = re.findall(linespace_regex,raw_text)    # Getting an array of delimeters that should be kept
         text_arr = re.split(linespace_regex,raw_text)           # Getting an array of text to be rejoined to the delimiters
         
@@ -342,6 +342,9 @@ class DocxWriter:
         for section, subsections in topic.sections_data.items():
             logging.info(f"[Writing]: Getting PDF for {section}")
             pdf = self.pdfs[section]
+
+            # Sort the Subsections in Ascending Order
+            subsections.sort()
 
             section_dict = pdf.getSections(subsections)
             topic_data.update(section_dict)
