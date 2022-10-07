@@ -25,45 +25,7 @@ class Logger:
     def logInfo(self,text:str) -> None:
         self.log.info(text)
 
-class General:
-
-    """
-    This class is built to handle potential issues that could be faced by different PDFs throughout Lexis Library.
-    """
-
-    def __init__(self) -> None:
-        pass
-
-    def removeNewLine(self,raw_text:str) -> List[str]:
-        """
-        Remove newline characters '\n' within the PDF text that are there due to space constraints. This avoids unnecessary line breaks in the middle of documents due to the formatting of the PDF document.
-        
-        This function will keep most linebreaks that occur at the end of paragraphs/bullet points.
-        """
-
-        linespace_regex = r'[\.;:—]\n|or\n|and\n'               # Regex to identify linespaces to be kept (New line after full stop etc.)
-        delimiter_arr = re.findall(linespace_regex,raw_text)    # Getting an array of delimeters that should be kept
-        text_arr = re.split(linespace_regex,raw_text)           # Getting an array of text to be rejoined to the delimiters
-        
-        text_arr_formatted = [s.replace('\n','') for s in text_arr]             # Replace '\n' with '' in the text array
-        delimiter_arr_formatted = [delim.replace('\n','') for delim in delimiter_arr]   # Replace '\n' with '' in the delimiter array
-
-        text_arr = []
-
-        if len(delimiter_arr_formatted) > 0:
-            # Delimiters present in text
-            text_delim_zip = zip(text_arr_formatted,delimiter_arr_formatted)    # Zip both arrays together to form a dictionary
-            
-            # Using tuple unpacking, get the text and delimiter rejoined in an array where there should be a line break for every element within this array.
-            for text, delimiter in text_delim_zip:
-                text_arr.append(text + delimiter)
-        else:
-            # Delimiters not present in text
-            text_arr += text_arr_formatted
-
-        return text_arr
-
-class ProcedurePDF(General):
+class ProcedurePDF:
 
     SECTION_MAIN_HEADING = "section_heading"
     SECTION_SUB_HEADING = "section_subheading"
@@ -249,10 +211,10 @@ class ProcedurePDF(General):
         SEE ALSO
         --------
         ProcedurePDF._removePageHeadingInText()
-        General.removeNewLine()
+        ProcedurePDF.removeNewLine()
         """
         text = self._removePageHeadingInText(text,page_heading)
-        text = self.removeNewLine(text)
+        text = self._removeNewLine(text)
         return text
 
 
@@ -323,6 +285,35 @@ class ProcedurePDF(General):
         When parsing through the PDF, the program will assume it is part of the text which is incorrect. This removes it.
         """
         return text.replace(f'{heading}\n','')
+
+    def _removeNewLine(self,raw_text:str) -> List[str]:
+        """
+        Remove newline characters '\n' within the PDF text that are there due to space constraints. This avoids unnecessary line breaks in the middle of documents due to the formatting of the PDF document.
+        
+        This function will keep most linebreaks that occur at the end of paragraphs/bullet points.
+        """
+
+        linespace_regex = r'[\.;:—]\n|or\n|and\n'               # Regex to identify linespaces to be kept (New line after full stop etc.)
+        delimiter_arr = re.findall(linespace_regex,raw_text)    # Getting an array of delimeters that should be kept
+        text_arr = re.split(linespace_regex,raw_text)           # Getting an array of text to be rejoined to the delimiters
+        
+        text_arr_formatted = [s.replace('\n','') for s in text_arr]             # Replace '\n' with '' in the text array
+        delimiter_arr_formatted = [delim.replace('\n','') for delim in delimiter_arr]   # Replace '\n' with '' in the delimiter array
+
+        text_arr = []
+
+        if len(delimiter_arr_formatted) > 0:
+            # Delimiters present in text
+            text_delim_zip = zip(text_arr_formatted,delimiter_arr_formatted)    # Zip both arrays together to form a dictionary
+            
+            # Using tuple unpacking, get the text and delimiter rejoined in an array where there should be a line break for every element within this array.
+            for text, delimiter in text_delim_zip:
+                text_arr.append(text + delimiter)
+        else:
+            # Delimiters not present in text
+            text_arr += text_arr_formatted
+
+        return text_arr
     
 class Topic:
 
