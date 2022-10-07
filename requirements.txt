@@ -1,0 +1,5 @@
+docx==0.2.4
+lxml==4.9.1
+Pillow==9.2.0
+PyPDF2==2.11.0
+typing_extensions==4.3.0
