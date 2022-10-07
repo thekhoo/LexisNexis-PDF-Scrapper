@@ -22,7 +22,7 @@ TL;DR - A tool to extract subsections as required from Blackstone's Criminal Pra
 
 2. Install the packages required from `requirements.txt`.
 
-    ```py
+    ```console
     pip install -r requirements.txt
     ```
 
