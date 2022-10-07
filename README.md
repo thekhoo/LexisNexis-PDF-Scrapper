@@ -22,6 +22,10 @@ TL;DR - A tool to extract subsections as required from Blackstone's Criminal Pra
 
 2. Install the packages required from `requirements.txt`.
 
+```py
+pip install -r requirements.txt
+```
+
 3. Create a JSON file called `topics.json` in the same directory as the `blackstone_scrapper.py` file. This will be used to tell the program which sections and subsections to scrape. The structure of the file is as follows:
 
     ```js
