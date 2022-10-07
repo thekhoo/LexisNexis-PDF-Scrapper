@@ -74,6 +74,8 @@ The file should be saved in a folder called `data`.
 2. Different log category classifications.
 3. Introduce appropriate error codes to identify errors.
 4. Update all hardcoded filepaths with `os.path.join()` for cross OS functionality.
+5. Introduce tests in the code.
+6. Introduce debug points in the code.
 
 ## Documentation
 
