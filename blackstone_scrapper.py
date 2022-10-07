@@ -189,21 +189,67 @@ class ProcedurePDF(General):
 
         return text_dict
 
-    def _getSectionDict(self,section:str,main_heading:str,sub_heading:str,section_text:List[str]) -> dict:
+    def _getSectionDict(self,subsection:str,main_heading:str,sub_heading:str,subsection_text:List[str]) -> dict:
         """
-        Create a dictionary with the data in the desired format.
+        Create a dictionary with the data in the required format.
+
+        PARAMETERS
+        ----------
+
+        subsection : str
+            The subsection that will be used as a key for the dictionary.
+
+        main_heading : str
+            The main heading for this subsection.
+
+        sub_heading : str
+            The sub heading for this subsection.
+
+        subsection_text : List[str]
+            The array of text that is contained under this subsection.
+
+        RETURNS
+        -------
+        Dictionary in the required format.
+
+        dict {
+            subsection : [
+                "section_heading": main_heading,
+                "section_subheading": sub_heading,
+                "section_text": subsection_text
+            ]
+        }
         """
         return {
-            section: {
+            subsection: {
                 self.SECTION_MAIN_HEADING: main_heading,
                 self.SECTION_SUB_HEADING: sub_heading,
-                self.SECTION_TEXT: section_text
+                self.SECTION_TEXT: subsection_text
             }
         }
 
     def _formatSectionText(self,text:str,page_heading:str) -> List[str]:
         """
-        Removes any occurances of the page heading within the text and removes newline characters as deemed appropriate. For more information, look at the documentation for the function ProcedurePDF._removePageHeadingInText() and General.removeNewLine()
+        Removes any occurrences of the page heading within the text and removes newline characters as deemed appropriate. For more information, look at the documentation for the function ProcedurePDF._removePageHeadingInText() and General.removeNewLine()
+
+        PARAMETERS
+        ----------
+        text : str
+            Raw text contained within the subsection.
+
+        page_heading : str
+            The heading that's on the current page of the PDF file.
+
+        RETURNS
+        -------
+        A list of strings that represents the text separated by newline characters where necessary.
+
+        List[str]
+
+        SEE ALSO
+        --------
+        ProcedurePDF._removePageHeadingInText()
+        General.removeNewLine()
         """
         text = self._removePageHeadingInText(text,page_heading)
         text = self.removeNewLine(text)
