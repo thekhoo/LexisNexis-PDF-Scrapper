@@ -280,13 +280,13 @@ class ProcedurePDF:
 
     def _removePageHeadingInText(self,text:str,heading:str) -> str:
         """
-        Removes any occurances of the page heading followed by a newline character within the text. This function is implemented as if a document exceeds the length of the page, the page heading is repeated on the following page followed by a newline character. 
+        Removes any occurrences of the page heading followed by a newline character within the text. This function is implemented as if a document exceeds the length of the page, the page heading is repeated on the following page followed by a newline character. 
         
         When parsing through the PDF, the program will assume it is part of the text which is incorrect. This removes it.
         """
         return text.replace(f'{heading}\n','')
 
-    def _removeNewLine(self,raw_text:str) -> List[str]:
+    def _removeNewLine(self,text:str) -> List[str]:
         """
         Remove newline characters '\n' within the PDF text that are there due to space constraints. This avoids unnecessary line breaks in the middle of documents due to the formatting of the PDF document.
         
@@ -294,10 +294,10 @@ class ProcedurePDF:
         """
 
         linespace_regex = r'[\.;:—]\n|or\n|and\n'               # Regex to identify linespaces to be kept (New line after full stop etc.)
-        delimiter_arr = re.findall(linespace_regex,raw_text)    # Getting an array of delimeters that should be kept
-        text_arr = re.split(linespace_regex,raw_text)           # Getting an array of text to be rejoined to the delimiters
+        delimiter_arr = re.findall(linespace_regex,text)        # Getting an array of delimeters that should be kept
+        text_arr = re.split(linespace_regex,text)               # Getting an array of text to be rejoined to the delimiters
         
-        text_arr_formatted = [s.replace('\n','') for s in text_arr]             # Replace '\n' with '' in the text array
+        text_arr_formatted = [s.replace('\n','') for s in text_arr]                     # Replace '\n' with '' in the text array
         delimiter_arr_formatted = [delim.replace('\n','') for delim in delimiter_arr]   # Replace '\n' with '' in the delimiter array
 
         text_arr = []
