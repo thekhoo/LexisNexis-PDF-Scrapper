@@ -8,9 +8,9 @@ This program is designed to get all the sections and subsections from Blackstone
 
 TL;DR - A tool to extract subsections as required from Blackstone's Criminal Practice 2022 from Lexis Library into a word document.
 
-**NOTE:** This program was designed purely for Part D of the Blackstone's Criminal Practice 2022 Document from Lexis Library. 
+> **NOTE:** This program was designed purely for Part D of the Blackstone's Criminal Practice 2022 Document from Lexis Library. 
 
-**Update 06/10/22:** The program seems to work fine on Parts D, E, F and R from Blackstone's Criminal Practice 2022 from Lexis Library.
+> **Update 06/10/22:** The program seems to work fine on Parts D, E, F and R from Blackstone's Criminal Practice 2022 from Lexis Library.
 
 ## How to use the tool
 
