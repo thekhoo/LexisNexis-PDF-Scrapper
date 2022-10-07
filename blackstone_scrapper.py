@@ -4,6 +4,7 @@ import json
 import PyPDF2
 import logging
 import regex as re
+import sys
 from sys import stdout
 
 from docx import Document
@@ -367,6 +368,19 @@ class DocxWriter:
         return 0
 
     def _writeTopicData(self,topic:Topic) -> int:
+        """
+        Writes the data of the topic to the document.
+
+        PARAMETERS
+        ----------
+        topic : Topic
+            The topic object created from 'topics.json'.
+        
+        RETURNS
+        -------
+        int : Exit Code
+            Exit code to indicate if the program ran successfully.
+        """
         logging.info(f'[Writing]: Writing data for {topic.topic}: {topic.title}')
 
         # Add the Topic Number and Topic Title as a "Title"
@@ -437,6 +451,9 @@ class DocxWriter:
         return 0
     
     def _getPDFObjects(self,unique_sections:List[str]) -> int:
+        """
+        Gets an array of ProcedurePDF objects to fill the pdfs property of this class.
+        """
 
         for section in unique_sections:
             logging.info(f'[PDFs]: Loading PDF for {section}')
@@ -457,4 +474,6 @@ if __name__ == '__main__':
         data = json.load(f)
     
     writer = DocxWriter(data)
-    writer.createDocument()
+    code = writer.createDocument()
+
+    sys.exit(code)
